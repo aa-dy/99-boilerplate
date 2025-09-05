@@ -1,0 +1,29 @@
+[build]
+  # Build command for Python dependencies
+  command = "pip install -r requirements.txt"
+  
+  # Directory where the built site will be published
+  publish = "."
+
+[functions]
+  # Directory where Netlify Functions are located
+  directory = "."
+
+# Environment variables (if needed)
+[build.environment]
+  PYTHON_VERSION = "3.11"
+
+# Redirect rules for SPA (if needed)
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+
+# Headers for CORS and security
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
